@@ -2,8 +2,8 @@ name: Build and Push Docker Image
 
 on:
   push:
-    branches:
-      - main # Change to your desired branch
+    paths:
+      - "src/**"
 
 jobs:
   build-and-push:
