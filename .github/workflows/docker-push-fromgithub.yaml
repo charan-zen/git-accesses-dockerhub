@@ -49,3 +49,11 @@ jobs:
       - name: Push Docker Image
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/git-accesses-dockerhub:${{ github.sha }}
+
+      - name: Run Container with Volume
+        run: |
+          docker run -d -p 3000:3000 -v myappdata:/app/data --name git-accesses-dockerhub-volume ${{ secrets.DOCKER_USERNAME }}/git-accesses-dockerhub:${{ github.sha }}
+
+      - name: Verify Volume Data
+        run: |
+          docker exec git-accesses-dockerhub-volume ls -l /app/data

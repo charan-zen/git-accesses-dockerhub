@@ -13,6 +13,9 @@ RUN npm install
 # Copy the rest of the application to the working directory
 COPY . .
 
+# Define a volume for persistent storage
+VOLUME [ "/app/data" ]
+
 # Expose the port the app runs on
 EXPOSE 3000
 
