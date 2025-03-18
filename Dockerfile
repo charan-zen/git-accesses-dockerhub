@@ -1,5 +1,5 @@
-# Use Node.js as the base image
-FROM node:20-alpine AS builder
+# Use a lightweight Node.js base image
+FROM node:20-alpine
 
 # Set the working directory
 WORKDIR /app
@@ -16,25 +16,11 @@ COPY . .
 # Build the React app
 RUN npm run build
 
-# Use a lightweight web server for production
-FROM nginx:alpine
+VOLUME [ "/app/data" ]
 
-
-# Create a directory for the volume
-RUN mkdir -p /usr/share/nginx/html
-
-# Set correct permissions for Nginx to access files
-RUN chown -R nginx:nginx /usr/share/nginx/html && chmod -R 755 /usr/share/nginx/html
-
-# Mount a volume for static files
-VOLUME /usr/share/nginx/html
-
-
-# Copy build files to Nginx
-COPY --from=builder /app/build /usr/share/nginx/html
 
 # Expose port 3000
-EXPOSE 3000
+EXPOSE 30000
 
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start app
+CMD ["npm", "start"]
