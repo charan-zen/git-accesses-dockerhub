@@ -23,8 +23,12 @@ FROM nginx:alpine
 # Create a directory for the volume
 RUN mkdir -p /usr/share/nginx/html
 
+# Set correct permissions for Nginx to access files
+RUN chown -R nginx:nginx /usr/share/nginx/html && chmod -R 755 /usr/share/nginx/html
+
 # Mount a volume for static files
 VOLUME /usr/share/nginx/html
+
 
 # Copy build files to Nginx
 COPY --from=builder /app/build /usr/share/nginx/html
